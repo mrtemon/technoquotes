@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТехноЦитатник СЮТ</title>
+    <style>
+        :root {
+            --primary: #3498db;    /* Основной синий */
+            --secondary: #2ecc71;  /* Зеленый */
+            --accent: #e74c3c;     /* Красный акцент */
+            --dark: #2c3e50;      /* Темно-синий */
+            --light: #ecf0f1;      /* Светлый фон */
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .logo img {
+            height: 60px;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 2.2rem;
+        }
+        
+        .quote-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .quote-text {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .quote-text::before {
+            content: '"';
+            position: absolute;
+            left: -0.5rem;
+            top: -1rem;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+        }
+        
+        .quote-author {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            font-style: italic;
+            text-align: right;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .share-btn {
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .share-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .ai-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        
+        .ai-section h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        
+        .ai-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .quote-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://via.placeholder.com/60x60/3498db/ffffff?text=SUT" alt="Логотип СЮТ">
+                <h1>ТехноЦитатник</h1>
+            </div>
+            <p>Мудрость для юных техников и изобретателей</p>
+        </header>
+        
+        <div class="quote-container">
+            <div class="quote-text" id="quote-text">Нажмите кнопку, чтобы получить новую цитату</div>
+            <div class="quote-author" id="quote-author">— Станция юных техников</div>
+        </div>
+        
+        <div class="controls">
+            <button id="new-quote-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                </svg>
+                Новая цитата
+            </button>
+            
+            <div class="share-buttons">
+                <button class="share-btn" id="share-vk">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM7.5 9.5H5.5v-3h2v3zm1-3h2v3h-2v-3zm3.5 5h-8v-1h8v1z"/>
+                    </svg>
+                </button>
+                <button class="share-btn" id="share-telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                </button>
+                <button class="share-btn" id="share-twitter">
+                    <svg xmlns="http://www.w2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A3.328 3.328 0 0 1 .88 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="ai-section">
+            <h3>AI-генератор цитат</h3>
+            <p>Создайте уникальную цитату на любую тему</p>
+            <div class="ai-input">
+                <input type="text" id="ai-prompt" placeholder="Введите тему для цитаты (например: космос, технологии)">
+                <button id="generate-ai-quote">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12.258 3h-8.51l-.083 2.46h.479c.26-1.544.758-1.783 2.693-1.845l.424-.013v7.827c0 .663-.144.82-1.3.923v.52h4.082v-.52c-1.162-.103-1.306-.26-1.306-.923V3.602l.431.013c1.934.062 2.434.301 2.693 1.846h.479L12.258 3z"/>
+                    </svg>
+                    Создать
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Станция юных техников. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script>
+        // База цитат
+        const quotes = [
+            {text: "Техника — это язык будущего.", author: "Константин Циолковский"},
+            {text: "Изобретать — это видеть то, что видят все, но думать так, как не думал никто.", author: "Альберт Сент-Дьёрди"},
+            {text: "Наука — это организованное знание, мудрость — это организованная жизнь.", author: "Иммануил Кант"},
+            {text: "Прогресс технологии дарит нам усовершенствованные средства для движения назад.", author: "Олдос Хаксли"},
+            {text: "Будущее принадлежит тем, кто верит в красоту своей мечты.", author: "Элеонора Рузвельт"},
+            {text: "Единственный способ сделать что-то очень хорошо — любить то, что ты делаешь.", author: "Стив Джобс"},
+            {text: "Мы не можем решать проблемы, используя тот же образ мышления, который мы использовали, когда создавали их.", author: "Альберт Эйнштейн"},
+            {text: "Инновация — это различие между лидером и последователем.", author: "Стив Джобс"},
+            {text: "Не бойтесь совершенства. Вам его не достичь.", author: "Сальвадор Дали"},
+            {text: "Логика приведет вас из пункта А в пункт Б. Воображение приведет вас куда угодно.", author: "Альберт Эйнштейн"}
+        ];
+
+        // Элементы DOM
+        const quoteText = document.getElementById('quote-text');
+        const quoteAuthor = document.getElementById('quote-author');
+        const newQuoteBtn = document.getElementById('new-quote-btn');
+        const shareVkBtn = document.getElementById('share-vk');
+        const shareTelegramBtn = document.getElementById('share-telegram');
+        const shareTwitterBtn = document.getElementById('share-twitter');
+        const generateAiQuoteBtn = document.getElementById('generate-ai-quote');
+        const aiPromptInput = document.getElementById('ai-prompt');
+
+        // Генерация случайной цитаты
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            return quotes[randomIndex];
+        }
+
+        // Обновление цитаты на странице
+        function updateQuote() {
+            const quote = getRandomQuote();
+            quoteText.textContent = quote.text;
+            quoteAuthor.textContent = `— ${quote.author}`;
+        }
+
+        // Поделиться в соцсетях
+        function shareQuote(socialNetwork) {
+            const currentQuote = quoteText.textContent;
+            const currentAuthor = quoteAuthor.textContent;
+            const text = `${currentQuote} ${currentAuthor}`;
+            const url = encodeURIComponent(window.location.href);
+            
+            let shareUrl;
+            
+            switch(socialNetwork) {
+                case 'vk':
+                    shareUrl = `https://vk.com/share.php?url=${url}&title=${encodeURIComponent('Цитата от СЮТ')}&comment=${encodeURIComponent(text)}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${encodeURIComponent(text)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + ' #СЮТ #ТехноЦитатник')}&url=${url}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+
+        // Генерация AI-цитаты (имитация)
+        function generateAiQuote() {
+            const prompt = aiPromptInput.value.trim();
+            
+            if (!prompt) {
+                alert('Введите тему для цитаты');
+                return;
+            }
+            
+            // Имитация работы AI - в реальности здесь будет запрос к API
+            quoteText.textContent = `Генерация цитаты на тему "${prompt}"...`;
+            quoteAuthor.textContent = "— AI СЮТ";
+            
+            setTimeout(() => {
+                // В реальном приложении здесь будет ответ от API
+                const fakeAiQuotes = [
+                    `Технологии "${prompt}" изменят наше будущее уже в ближайшие годы.`,
+                    `Изучение "${prompt}" — это ключ к пониманию мира завтрашнего дня.`,
+                    `Никогда не недооценивайте силу "${prompt}" в изменении человеческой истории.`
+                ];
+                
+                const randomResponse = fakeAiQuotes[Math.floor(Math.random() * fakeAiQuotes.length)];
+                quoteText.textContent = randomResponse;
+                quoteAuthor.textContent = "— AI СЮТ";
+            }, 1500);
+        }
+
+        // Обработчики событий
+        newQuoteBtn.addEventListener('click', updateQuote);
+        shareVkBtn.addEventListener('click', () => shareQuote('vk'));
+        shareTelegramBtn.addEventListener('click', () => shareQuote('telegram'));
+        shareTwitterBtn.addEventListener('click', () => shareQuote('twitter'));
+        generateAiQuoteBtn.addEventListener('click', generateAiQuote);
+
+        // Инициализация
+        updateQuote();
+    </script>
+</body>
+</html>
